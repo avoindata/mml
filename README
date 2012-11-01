@@ -1,0 +1,12 @@
+This directory contains shape file archives from Land Survey Finland (Maanmittauslaitos; MML):
+1_milj_Shape_etrs_shape.zip
+4_5_milj_shape_etrs-tm35fin.zip 
+
+These zip files have been downloaded from MML server http://www.maanmittauslaitos.fi/aineistot-palvelut/digitaaliset-tuotteet/ilmaiset-aineistot/hankinta and are licensed openly.
+
+The shape files within the zip archives have been converted into RData format as described in https://github.com/louhos/sorvi/wiki/Maanmittauslaitos/
+
+MML shape objects can be downloaded in RData format from RData/ folder- 
+
+Contact: http://louhos.github.com/contact.html
+
