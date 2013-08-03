@@ -1,0 +1,10 @@
+This folder contains cleaned-up versions of geographic information.
+
+
+----------------------------------------
+
+kunnat.*
+
+Kuntakartta. Map of Finland, excluding sea regions. Constructed by excluding the baltic sea, then small land regions that are below detection limit. After this, GDAL was used with command ogr2ogr2 -t_srs EPSG:4326 output.shp input.shp to convert coordinate system into WGS-84. 
+
+----------------------------------------
