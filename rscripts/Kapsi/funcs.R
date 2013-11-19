@@ -1,4 +1,86 @@
+#' Read zip files from given URL 
+#'
+#' Arguments:
+#'   @param url url
+#'
+#' Returns:
+#'   @return zip file list
+#'
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
 
+url_shp_to_spdf <- function(url) {
+ 
+  # Adjusted from http://thebiobucket.blogspot.co.at
+
+  require(rgdal)
+ 
+  wd <- getwd()
+  td <- tempdir()
+  setwd(td)
+ 
+  temp <- tempfile(fileext = ".zip")
+  download.file(url, temp)
+  unzip(temp)
+ 
+  shp <- dir(tempdir(), "*.shp$")
+  lyr <- sub(".shp$", "", shp)
+  y <- lapply(X = lyr, FUN = function(x) readOGR(dsn=shp, layer=lyr))
+  names(y) <- lyr
+ 
+  unlink(dir(td))
+  setwd(wd)
+  return(y)
+  }
+
+#' List zip files in MML sudirectory structure on Kapsi server
+#'
+#' Arguments:
+#'   @param url url
+#'
+#' Returns:
+#'   @return zip file list
+#'
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
+list.MML.zips <- function (url) {
+
+  library(XML)
+
+  temp <- readHTMLTable(url)
+  entries <- as.vector(temp[[1]]$Name)
+  entries <- paste(url, entries[grep("/", as.vector(temp[[1]]$Name))], sep = "")
+
+  zips <- list()
+  for (url2 in entries) {
+
+    temp2 <- readHTMLTable(url2)
+    entries2 <- as.vector(temp2[[1]]$Name)
+    entries2 <- paste(url2, entries2[grep("/", as.vector(temp2[[1]]$Name))], sep = "")
+ 
+    for (url3 in entries2) {
+      temp3 <- readHTMLTable(url3)
+      entries3 <- as.vector(temp3[[1]]$Name)
+      entries3 <- paste(url3, entries3[grep(".zip", as.vector(temp3[[1]]$Name))], sep = "")
+      zips[[url3]] <- entries3
+    }
+
+    if (length(grep(".zip", entries2)) > 0) {stop("zip files found in root dir - handle this")}
+
+  }
+
+  zips
+
+}
 
 
 #' Download MML data
@@ -46,8 +128,13 @@ GetMML <- function (url, tmp.dir) {
     # Read and preprocess shape file
     message(f)
     fnam <- paste(tmp.dir, "/", f, sep = "")
-    sp <- maptools::readShapeSpatial(fnam)
-    shape.list[[f]] <- PreprocessShapeMML(sp)
+    a <- try(sp <- maptools::readShapeSpatial(fnam))
+
+    if (length(grep("Error", a)) > 0) {
+      warning(paste("failed to read", f))
+    } else {
+      shape.list[[f]] <- PreprocessShapeMML(sp)
+    }
 
   }
 
