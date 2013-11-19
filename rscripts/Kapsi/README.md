@@ -1,3 +1,5 @@
+### Directory contents
+
 This directory contains automated scripts to convert GIS data from [Land Survey Finland](http://www.maanmittauslaitos.fi/aineistot-palvelut/latauspalvelut/avoimien-aineistojen-tiedostopalvelu) (Maanmittauslaitos / MML) into RData format for convenient and light-weight downstream processing in R. The data sets are (C) MML 2013 and openly licensed.
 
 Downloading the maps from the original [MML site](http://www.maanmittauslaitos.fi/aineistot-palvelut/latauspalvelut/avoimien-aineistojen-tiedostopalvelu) requires authentication. We hence get the data through [Kapsi](http://kartat.kapsi.fi/http://kartat.kapsi.fi/), allowing direct downloads.
@@ -7,9 +9,8 @@ This project is associated with the [rOpenGov](http://ropengov.github.io/) proje
 
 ### Kapsi to RData conversions
 
-[kapsi2rdata.R](kapsi2rdata.R) converts key data files from MML into RData files
-
-This downloads [MML
+[kapsi2rdata.R](kapsi2rdata.R) converts key data files from MML into
+RData files; it downloads [MML
 data](http://www.maanmittauslaitos.fi/aineistot-palvelut/latauspalvelut/avoimien-aineistojen-tiedostopalvelu)
 from [Kapsi](http://kartat.kapsi.fi/) and converts it into RData
 format. Some preprocessing is done to handle special characters and
@@ -25,9 +26,12 @@ Currently these map collections are available as RData files:
 
  * [Yleiskartta 1000](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000)
  * [Yleiskartta 4500](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000)
+ * [Maastotietokanta tiestö 1 (N61)](http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N61.shp.zip)
+ * [Maastotietokanta tiestö 2 (N62)](http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N62.shp.zip)
+
 
 We are looking forward to add more when time allows. Your
-contributions are welcome.
+contributions are welcome. See the [TODO](TODO) file.
 
 
 ### License
