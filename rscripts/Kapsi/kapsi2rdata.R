@@ -31,7 +31,7 @@ for (id in names(MML)) {
 # Save batch information into a README file
 fnam <- paste(destination.dir, "README", sep = "")
 write(paste("Last conversion:", date()), file = fnam)
-write("For documentation, see https://github.com/louhos/takomo/blob/master/MML/Kapsi/README", file = fnam, append = TRUE)
+write("For details, see https://github.com/avoindata/mml/tree/master/rscripts/Kapsi", file = fnam, append = TRUE)
 
 # Remove the temporary dirs
 system(paste("rm -rf tmp.yleiskartta.1000"))
