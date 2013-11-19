@@ -2,7 +2,23 @@
 # From http://kartat.kapsi.fi/
 # Later represent this in clearer CSV or JSON format
 
-url.list <- list(
+  # Maastotietokanta (Shape files)
+    # Maastotietokanta kaikki; 9.9G; 
+    # Maastotietokanta tiestö osoitteilla 1; 14K; 
+    # Maastotietokanta tiestö osoitteilla 2; 1.3M; 
+  maastotietokanta = list(
+  		          "tiesto_1" = "http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N61.shp.zip",
+  			  "tiesto_2" = "http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N62.shp.zip"),
+
+  # Maastotietokanta kaikki; 9.9G; several subdirs
+  url.list[["Maastotietokanta-kaikki"]] <- "http://kartat.kapsi.fi/files/maastotietokanta/kaikki/etrs89/shp/
+
+
+
+  # Maastokartta (Shape)
+  # several subfolders; check in more detail how could be used
+  maastokartta = list("100" = "http://kartat.kapsi.fi/files/maastokartta_100k/kaikki/etrs89/shp/",
+  	              "250" = "http://kartat.kapsi.fi/files/maastokartta_250k/kaikki/etrs89/shp/"),
 
   # Karttanimet (TXT files); 
       # Paikannimitaulukot + avain-PDF:t
@@ -24,19 +40,6 @@ url.list <- list(
   	             "kaikki_2" = "http://kartat.kapsi.fi/files/nimisto/paikannimet_kaikki/etrs89/txt/PNR_2012_01.ZIP",
   		     "paikat" = "http://kartat.kapsi.fi/files/nimisto/paikat/etrs89/gml/paikat_2012_10.zip"),
 
-  # Maastotietokanta (Shape files)
-    # Maastotietokanta kaikki; 9.9G; 
-    # Maastotietokanta tiestö osoitteilla 1; 14K; 
-    # Maastotietokanta tiestö osoitteilla 2; 1.3M; 
-  maastotietokanta = list("kaikki" = "http://kartat.kapsi.fi/files/maastotietokanta/kaikki/etrs89/shp.zip",
-  		          "tiesto_1" = "http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N61.shp.zip",
-  			  "tiesto_2" = "http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N62.shp.zip"),
-
-  # Maastokartta (Shape)
-  # several subfolders; check in more detail how could be used
-  maastokartta = list("100" = "http://kartat.kapsi.fi/files/maastokartta_100k/kaikki/etrs89/shp/",
-  	              "250" = "http://kartat.kapsi.fi/files/maastokartta_250k/kaikki/etrs89/shp/"),
-
   
   # Kuntajako (XML); 
   # some problems in R; municipality borders also available through yleiskartta shapefiles so skip for now.
@@ -45,14 +48,11 @@ url.list <- list(
     #Kuntajako 250; 1.0M; 
     #Kuntajako 1000; 642k; 
     #Kuntajako 4500; 259k; 
-
     kuntajako = list("10"  = "http://kartat.kapsi.fi/files/kuntajako/kuntajako_10k/etrs89/gml/TietoaKuntajaosta_2013_10k.zip",
     	             "100"  = "http://kartat.kapsi.fi/files/kuntajako/kuntajako_100k/etrs89/gml/TietoaKuntajaosta_2013_100k.zip",
     		     "250" = "http://kartat.kapsi.fi/files/kuntajako/kuntajako_250k/etrs89/gml/TietoaKuntajaosta_2013_250k.zip",
     		     "1000" = "http://kartat.kapsi.fi/files/kuntajako/kuntajako_1000k/etrs89/gml/TietoaKuntajaosta_2013_1000k.zip",
     		     "4500" = "http://kartat.kapsi.fi/files/kuntajako/kuntajako_4500k/etrs89/gml/TietoaKuntajaosta_2013_4500k.zip"),
-
-
 
   # OK - sorvi functions done
   # Yleiskartta (Shape files)
@@ -62,7 +62,6 @@ url.list <- list(
   	             "4500" = "http://kartat.kapsi.fi/files/yleiskartta_4500k/kaikki/etrs89/shape/4_5_milj_shape_etrs-tm35fin.zip")
 
 
-)
 
 
 

@@ -1,3 +1,22 @@
+
+
+
+#' Download MML data
+#'
+#' Arguments:
+#'   @param url url
+#'   @param tmp.dir temporary data directory
+#'
+#' Returns:
+#'   @return data
+#'
+#' @export
+#' @references
+#' See citation("sorvi") 
+#' @author Leo Lahti \email{louhos@@googlegroups.com}
+#' @examples # 
+#' @keywords utilities
+
 GetMML <- function (url, tmp.dir) {
 
   require(maptools)
