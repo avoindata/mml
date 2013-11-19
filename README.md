@@ -1,8 +1,8 @@
 ### Directory contents
 
-[rdata](rdata) Certain key data sets from MML in RData format
+[rdata](rdata) Key data sets from MML in RData format
 
-[rscripts](rscripts) Automated scripts to convert GIS data from [Land Survey Finland](http://www.maanmittauslaitos.fi/aineistot-palvelut/latauspalvelut/avoimien-aineistojen-tiedostopalvelu) (Maanmittauslaitos / MML) into RData format for convenient and light-weight downstream processing in R. The data sets are (C) MML 2013 and openly licensed. 
+[rscripts](rscripts) Automated scripts that were used to convert [MML](http://www.maanmittauslaitos.fi/aineistot-palvelut/latauspalvelut/avoimien-aineistojen-tiedostopalvelu) GIS data into RData format. 
 
 This repository is associated with the [rOpenGov](http://ropengov.github.io/) project.
 
