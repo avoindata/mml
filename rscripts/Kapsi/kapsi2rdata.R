@@ -58,4 +58,4 @@ write("For full details, references and contact information, see https://github.
 
 # Send RData to datavaalit site (will require password)
 # system(paste("scp -r", output.dir, "username@server.xxx:../datavaalit/storage/avoindata/mml/"))
-
+# Also see spider.R for further shape file processing scripts.

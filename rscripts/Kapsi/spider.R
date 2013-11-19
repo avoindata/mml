@@ -1,3 +1,6 @@
+# 19.11.2013 This does not work. All shape files within these subdirectories seem to be broken. 
+# At least from the perspective of R.
+
 # Get the urls for the data zip files in subdir structures
 # Then read the shape files within these zips and store into RData
 
