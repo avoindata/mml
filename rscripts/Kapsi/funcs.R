@@ -23,7 +23,8 @@ url_shp_to_spdf <- function(url) {
   td <- tempdir()
   setwd(td)
  
-  temp <- tempfile(fileext = ".zip")
+  #temp <- tempfile(fileext = ".zip")
+  temp <- "tmp.zip"
   download.file(url, temp)
   unzip(temp)
  
@@ -128,9 +129,10 @@ GetMML <- function (url, tmp.dir) {
     # Read and preprocess shape file
     message(f)
     fnam <- paste(tmp.dir, "/", f, sep = "")
-    a <- try(sp <- maptools::readShapeSpatial(fnam))
+    sp <- NULL
+    sp <- try(maptools::readShapeSpatial(fnam))
 
-    if (length(grep("Error", a)) > 0) {
+    if (length(grep("Spatial", class(sp))) == 0) {
       warning(paste("failed to read", f))
     } else {
       shape.list[[f]] <- PreprocessShapeMML(sp)

@@ -33,19 +33,23 @@ for (id in names(url.list)) {
   url <- url.list[[id]]
 
   # Temporary directory
-  tmp.dir <- paste("tmp.", rnorm(1), sep = "")
+  tmp.dir <- tempfile(fileext = ".zip")
 
   # Get the data
   dat <- GetMML(url, tmp.dir)
 
   # Convert to RData and store to rdata/ subdir and save the original zip files
   output.dir <- ConvertMMLToRData(dat$shape.list, output.dir = paste(destination.dir, id, "/", sep = ""))
-  system(paste("cp ", dat$zipfile, output.dir))
+  # system(paste("cp ", dat$zipfile, output.dir))
 
-  # Remove the temporary dirs
-  system(paste("rm -rf ", tmp.dir))
+  write(paste("The RData files in this directory were converted from", url, "on", date(), "with https://github.com/avoindata/mml/blob/master/rscripts/Kapsi/kapsi2rdata.R"), file = paste(output.dir, "README", sep = ""))
 
 }
+
+# Easier way to download the files but not get worḱing yet
+#url <- url.list[[2]]
+#y <- url_shp_to_spdf(url.list[[1]])
+#z <- unlist(unlist(y))
 
 # Save batch information 
 fnam <- paste(destination.dir, "README", sep = "")
