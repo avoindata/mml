@@ -1,0 +1,6 @@
+Land Survey Finland (MML) data in RData format. 
+The data (C) MML 2013.
+Obtained through Kapsi.
+Converted using scripts in github.com/avoindata/mml
+Last conversion: Wed Nov 20 14:25:32 2013
+For full details, references and contact information, see https://github.com/avoindata/mml/tree/master/rscripts/Kapsi
