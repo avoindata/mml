@@ -1,4 +1,0 @@
-The RData files in this directory were converted from data/1_milj_Shape_etrs_shape.zip on Tue Nov 26 17:53:27 2013 with https://github.com/avoindata/mml/blob/master/rscripts/MML/mml2rdata.R
-Data (C) MML 2013. Yleiskartta. The original zip files were downloaded manually from https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta
-RData Conversion (C) Leo Lahti / Louhos louhos.github.com; FreeBSD license
-For more information of the MML Yleiskartta, see http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000 and http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000

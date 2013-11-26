@@ -36,7 +36,7 @@ for (id in names(url.list)) {
   tmp.dir <- tempfile(fileext = ".zip")
 
   # Get the data
-  dat <- GetMML(url, tmp.dir)
+  dat <- GetKapsi(url, tmp.dir)
 
   # Convert to RData and store to rdata/ subdir and save the original zip files
   output.dir <- ConvertMMLToRData(dat$shape.list, output.dir = paste(destination.dir, id, "/", sep = ""))
