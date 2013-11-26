@@ -87,7 +87,7 @@ list.MML.zips <- function (url) {
 #' Download MML data
 #'
 #' Arguments:
-#'   @param url url
+#'   @param zipfile zip file URL or local file name
 #'   @param tmp.dir temporary data directory
 #'
 #' Returns:
@@ -100,12 +100,12 @@ list.MML.zips <- function (url) {
 #' @examples # 
 #' @keywords utilities
 
-GetMML <- function (url, tmp.dir) {
+GetMML <- function (zipfile, tmp.dir) {
 
   require(maptools)
 
   # Temporary file name
-  items <- unlist(strsplit(gsub("/", "--", url), "--")); 
+  items <- unlist(strsplit(gsub("/", "--", zipfile), "--")); 
   local.zip <- items[[length(items)]]
   local.zip <- paste(tmp.dir, local.zip, sep = "/")
 
@@ -115,7 +115,11 @@ GetMML <- function (url, tmp.dir) {
   }
 
   # Download the zip file:
-  download.file(url, destfile = local.zip)
+  if (is.url(zipfile)) {
+    download.file(zipfile, destfile = local.zip)
+  } else {
+    local.zip <- zipfile
+  }
 
   # Unzip the downloaded zip file
   unzip(local.zip, exdir = file.path(tmp.dir))
@@ -143,6 +147,7 @@ GetMML <- function (url, tmp.dir) {
   list(shape.list = shape.list, zipfile = local.zip, tmp.dir = tmp.dir)
 
 }
+
 
 
 

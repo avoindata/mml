@@ -42,7 +42,15 @@ for (id in names(url.list)) {
   output.dir <- ConvertMMLToRData(dat$shape.list, output.dir = paste(destination.dir, id, "/", sep = ""))
   # system(paste("cp ", dat$zipfile, output.dir))
 
-  write(paste("The RData files in this directory were converted from", url, "on", date(), "with https://github.com/avoindata/mml/blob/master/rscripts/Kapsi/kapsi2rdata.R"), file = paste(output.dir, "README", sep = ""))
+  fnam <- paste(output.dir, "README.Kapsi", sep = "")
+
+  write(paste("The RData files in this directory were converted from", url, "on", date(), "with https://github.com/avoindata/mml/blob/master/rscripts/Kapsi/kapsi2rdata.R"), file = fnam)
+
+  write(paste("Data (C) MML 2013. The original zip files were automatically downloaded from https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta"), file = fnam, append = TRUE)
+
+  write(paste("RData Conversion (C) Leo Lahti / Louhos louhos.github.com; FreeBSD license"), file = fnam, append = TRUE)
+
+  write(paste("For more information of the MML map files, see http://www.maanmittauslaitos.fi"), file = fnam, append = TRUE)
 
 }
 
@@ -56,9 +64,8 @@ fnam <- paste(destination.dir, "README", sep = "")
 write("Land Survey Finland (MML) data in RData format. ", file = fnam)
 write("The data (C) MML 2013.", file = fnam, append = TRUE)
 write("Obtained through Kapsi.", file = fnam, append = TRUE)
-write("Converted using scripts in github.com/avoindata/mml", file = fnam, append = TRUE)
+write("For full conversion details, references and contact information, see https://github.com/avoindata/mml/tree/master/rscripts/Kapsi", file = fnam, append = TRUE)
 write(paste("Last conversion:", date()), file = fnam, append = TRUE)
-write("For full details, references and contact information, see https://github.com/avoindata/mml/tree/master/rscripts/Kapsi", file = fnam, append = TRUE)
 
 # Send RData to datavaalit site (will require password)
 # system(paste("scp -r", output.dir, "username@server.xxx:../datavaalit/storage/avoindata/mml/"))

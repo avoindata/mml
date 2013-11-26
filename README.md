@@ -10,10 +10,12 @@ This repository is associated with the [rOpenGov](http://ropengov.github.io/) pr
 
 Currently these map collections are available as RData files:
 
- * [Yleiskartta 1000](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000)
- * [Yleiskartta 4500](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000)
- * [Maastotietokanta tiestö 1 (N61)](http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N61.shp.zip)
- * [Maastotietokanta tiestö 2 (N62)](http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N62.shp.zip)
+ * [Yleiskartta1000](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000) (converted with [mml2rdata.R](rscripts/MML/mml2rdata.R))
+ * [Yleiskartta4500](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000) (converted with [mml2rdata.R](rscripts/MML/mml2rdata.R))
+ * [Yleiskartta-1000](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-11-000-000) (converted with [mml2rdata.R](rscripts/Kapsi/kapsi2rdata.R))
+ * [Yleiskartta-4500](http://www.maanmittauslaitos.fi/digituotteet/yleiskartta-14-500-000) (converted with [mml2rdata.R](rscripts/Kapsi/kapsi2rdata.R))
+ * [Maastotietokanta tiestö 1 (N61)](http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N61.shp.zip) (converted with [mml2rdata.R](rscripts/Kapsi/kapsi2rdata.R))
+ * [Maastotietokanta tiestö 2 (N62)](http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N62.shp.zip) (converted with [mml2rdata.R](rscripts/Kapsi/kapsi2rdata.R))
 
 
 We are looking forward to add more when time allows. Your
