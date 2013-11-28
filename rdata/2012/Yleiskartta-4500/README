@@ -1,0 +1,3 @@
+The RData files in this directory were converted from ../../rdata/2012/Yleiskartta-4500/README on Thu Nov 28 11:45:34 2013 with https://github.com/avoindata/mml/blob/master/rscripts/MML/mml2rdata.R
+Data (C) MML 2011-2012. The original zip files were downloaded manually from https://tiedostopalvelu.maanmittauslaitos.fi in 2012 and follow the municipal borders from that time.
+RData Conversion (C) Leo Lahti / Louhos louhos.github.com; FreeBSD license

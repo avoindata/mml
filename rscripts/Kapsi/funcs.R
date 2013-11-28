@@ -176,11 +176,6 @@ GetMML <- function (zipfile, tmp.dir) {
   local.zip <- items[[length(items)]]
   local.zip <- paste(tmp.dir, local.zip, sep = "/")
 
-  # Create temporary directory and zip file destination
-  if (length(dir(tmp.dir)) == 0) {
-    system(paste("mkdir ", tmp.dir))  
-  }
-
   # Download the zip file:
   if (is.url(zipfile)) {
     download.file(zipfile, destfile = local.zip)
@@ -192,26 +187,31 @@ GetMML <- function (zipfile, tmp.dir) {
   unzip(local.zip, exdir = file.path(tmp.dir))
 
   # List the unzipped shape files
-  shape.files <- dir(tmp.dir, pattern = ".shp$")
+  shape.files <- dir(paste(tmp.dir, "/etrs-tm35fin/", sep = ""), pattern = ".shp$", full.names = TRUE)
+
+  system(paste("mv ", tmp.dir, "/Maanmittaus*", " ", tmp.dir, "/MaanmittauslaitoksenIlmaiskayttooikeuslisenssiYleiskartta.pdf", sep = ""))
+  pdf.files <- dir(tmp.dir, pattern = "Maanmittaus", full.names = TRUE)
+  txt.files <- dir(tmp.dir, pattern = ".txt$", full.names = TRUE)
 
   shape.list <- list()
   for (f in shape.files) {
  
     # Read and preprocess shape file
     message(f)
-    fnam <- paste(tmp.dir, "/", f, sep = "")
     sp <- NULL
-    sp <- try(maptools::readShapeSpatial(fnam))
+    sp <- try(maptools::readShapeSpatial(f))
 
     if (length(grep("Spatial", class(sp))) == 0) {
       warning(paste("failed to read", f))
     } else {
-      shape.list[[f]] <- PreprocessShapeMML(sp)
+      fsplit <- unlist(strsplit(f, "/")); 
+      fout <- fsplit[[length(fsplit)]]
+      shape.list[[fout]] <- PreprocessShapeMML(sp)
     }
 
   }
 
-  list(shape.list = shape.list, zipfile = local.zip, tmp.dir = tmp.dir)
+  list(shape.list = shape.list, zipfile = local.zip, tmp.dir = tmp.dir, other.files = c(pdf.files, txt.files))
 
 }
 
