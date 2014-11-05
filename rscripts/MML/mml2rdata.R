@@ -51,11 +51,20 @@ for (id in names(file.list)) {
 
 }
 
+# ----------------------------------------
+
+# Finally convert some shape files into data frames for simplified downloads
+load("../../rdata/Yleiskartta-1000/HallintoAlue.RData")
+df <- as.data.frame(sp)
+save(df, file = "../../rdata/Yleiskartta-1000/HallintoAlue_DataFrame.RData")
+
+# ----------------------------------------
+
 # Save batch information 
 fnam <- paste(destination.dir, "README", sep = "")
 write("Land Survey Finland (MML) data in RData format. ", file = fnam)
-write("The data (C) MML 2011-2012.", file = fnam, append = TRUE)
-write("The origina zip files downloaded from MML 2012 by Leo Lahti.", file = fnam, append = TRUE)
+write("The data (C) MML 2011-2013.", file = fnam, append = TRUE)
+write("The original zip files downloaded from MML 2013 by Leo Lahti.", file = fnam, append = TRUE)
 write("For full conversion details, references and contact information, see https://github.com/avoindata/mml/tree/master/rscripts/MML", file = fnam, append = TRUE)
 write(paste("Last conversion:", date()), file = fnam, append = TRUE)
 
