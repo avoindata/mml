@@ -1,1 +1,4 @@
-The RData files in this directory were converted from http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N62.shp.zip on Wed Nov 20 14:23:10 2013 with https://github.com/avoindata/mml/blob/master/rscripts/Kapsi/kapsi2rdata.R
+The RData files in this directory were converted from http://kartat.kapsi.fi/files/maastotietokanta/tiesto_osoitteilla/etrs89/shp/N62.shp.zip on Thu Jan  8 18:24:53 2015 with https://github.com/avoindata/mml/blob/master/rscripts/Kapsi/kapsi2rdata.R
+Data (C) MML 2013. The original zip files were automatically downloaded from https://tiedostopalvelu.maanmittauslaitos.fi/tp/kartta
+RData Conversion (C) Leo Lahti / Louhos louhos.github.com; FreeBSD license
+For more information of the MML map files, see http://www.maanmittauslaitos.fi
