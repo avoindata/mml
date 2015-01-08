@@ -115,7 +115,7 @@ GetKapsi <- function (zipfile, tmp.dir) {
   }
 
   # Download the zip file:
-  if (is.url(zipfile)) {
+  if (is_url(zipfile)) {
     download.file(zipfile, destfile = local.zip)
   } else {
     local.zip <- zipfile
@@ -177,7 +177,7 @@ GetMML <- function (zipfile, tmp.dir) {
   local.zip <- paste(tmp.dir, local.zip, sep = "/")
 
   # Download the zip file:
-  if (is.url(zipfile)) {
+  if (is_url(zipfile)) {
     download.file(zipfile, destfile = local.zip)
   } else {
     local.zip <- zipfile
