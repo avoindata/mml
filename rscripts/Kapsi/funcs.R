@@ -366,20 +366,22 @@ PreprocessShapeMML <- function (sp) {
     kunta[inds] <- as.character(sp$Kunta_ni2[inds])
     dat$Kunta.FI <- iconv(kunta, from = "latin1", to = "UTF-8")
     
+    dat$Kunta.FI <- convert_municipality_codes(dat$Kunta.FI)
     # Update municipality names
-    dat$Kunta.FI <- ConvertMunicipalityNames(dat$Kunta.FI)
     dat$Kunta.FI <- factor(dat$Kunta.FI)
 
   }
   
+  # The shapefile being processed is recognized to conatain municipality 
+  # polygons if it contains field "Enklaavi".
   # Attribute field "Enklaavi" specifies of how many parts a municipality 
   # constitutes of. 1 indicates only one polygon, anything >1 means that the
   # municipality constitutes of several polygons. Other than field "Enklaavi",
   # the attribute rows are identical. Merge polygons and use the first 
   # attribute row.
-  browser()
+  
   # First check if multipolygon municipalities exist
-  if (any(dat$Enklaavi > 1)) {
+  if ("Enklaavi" %in% names(dat) & any(dat$Enklaavi > 1)) {
     union_sp <- unionSpatialPolygons(sp, sp$Kunta)
     # Get only 1st attribute data row ("Enklaavi") for each municipality
     dat <- dat[which(dat$Enklaavi == 1),]
