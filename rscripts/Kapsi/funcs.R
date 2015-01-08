@@ -394,7 +394,8 @@ PreprocessShapeMML <- function (sp) {
   } else {
     sp@data <- dat
   }
-
+  # Set projection string to ETRS89 TM35-FIN
+  proj4string(sp) <- "+init=epsg:3067"
   return(sp)
 }
 
