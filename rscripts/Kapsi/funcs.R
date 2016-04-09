@@ -249,18 +249,10 @@ GetMML <- function(id, zipfile, tmp.dir) {
 #' @examples #
 #' @keywords utilities
 
-ConvertMMLToRData <- function (MML, output.dir) {
+ConvertMMLToRData <- function(MML, output.dir) {
 
   if (length(dir(output.dir)) == 0) {
-    nams <- unlist(strsplit(gsub("/", "--", output.dir), "--"))
-    dir.orig <- getwd()
-    k <- 1
-    while (k <= length(nams)) {
-      system(paste("mkdir", nams[[k]]))
-      setwd(nams[[k]])
-      k <- k+1
-    }
-    setwd(dir.orig)
+    dir.create(file.path(getwd(), output.dir), recursive = TRUE)
   }
 
   for (item in names(MML)) {
@@ -268,7 +260,7 @@ ConvertMMLToRData <- function (MML, output.dir) {
 
     sp <- MML[[item]]
 
-    fnam <- paste(output.dir, item, ".RData", sep = "")
+    fnam <- file.path(output.dir, paste0(item, ".RData"))
     fnam <- gsub(".shp", "", fnam)
 
     # Save the data
@@ -277,7 +269,7 @@ ConvertMMLToRData <- function (MML, output.dir) {
 
   }
 
-  output.dir
+  return(output.dir)
 
 }
 
