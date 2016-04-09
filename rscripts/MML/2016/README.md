@@ -1,0 +1,1 @@
+The zip files in this directory were manually downloaded from [PaITuli spatial data service]( https://research.csc.fi/paituli) in 2016-04-01 by [Joona Lehtomäki](http://louhos.github.com/contact.html). Datasets by National land survey of Finland is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
