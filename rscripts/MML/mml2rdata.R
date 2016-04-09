@@ -1,17 +1,26 @@
-
-
-# Convert certain key data files from MML, obtained through Kapsi, into RData format.
-# From http://kartat.kapsi.fi/
+# Convert data files from MML, obtained through Kapsi and PaITuli, into RData
+# format.
 # List the data sets relevant to our present R tools
+
+# If run from RStudio, set the WD correctly
+if (Sys.getenv("RSTUDIO") == "1") {
+  setwd("rscripts/MML/")
+}
 
 file.list <- c()
 
-# Maastotietokanta tiestö osoitteilla 1; 14K; 
-file.list[["Yleiskartta-1000"]] <- "2012/1_milj_Shape_etrs_shape.zip"
-file.list[["Yleiskartta-4500"]] <- "2012/4_5_milj_shape_etrs-tm35fin.zip"
+# Maastotietokanta tiestö osoitteilla 1; 14K;
+# From http://kartat.kapsi.fi/
+file.list[["Yleiskartta-1000"]] <- list(src.file = "2012/1_milj_Shape_etrs_shape.zip",
+                                        dst.dir = "../../rdata/2012")
 
-# Directory to store the data
-destination.dir <- "../../rdata/2012/"
+file.list[["Yleiskartta-4500"]] <- list(src.file = "2012/4_5_milj_shape_etrs-tm35fin.zip",
+                                        dst.dir = "../../rdata/2012")
+
+# Kuntajako ilman merialueita 2016, 1:1 000 000
+# From PaITuli https://research.csc.fi/paituli
+file.list[["Kuntajako-1000"]] <- list(src.file = "2016/Kuntajako_2016_1_1milj.zip",
+                                      dst.dir = "../../rdata/2016")
 
 library(sorvi)
 source("../Kapsi/funcs.R")
@@ -19,21 +28,25 @@ source("../Kapsi/funcs.R")
 for (id in names(file.list)) {
 
   # Pick the MML Shape files
-  zipfile <- file.list[[id]]
+  zipfile <- file.list[[id]][["src.file"]]
 
   # Set up temporary directory
   tmp.dir <- tempdir()
 
   # Get the data
-  dat <- GetMML(zipfile, tmp.dir)
+  dat <- GetMML(id, zipfile, tmp.dir)
 
   # Convert to RData and store to rdata/ subdir and save the original zip files
-  output.dir <- ConvertMMLToRData(dat$shape.list, output.dir = paste(destination.dir, id, "/", sep = ""))
+  output.dir <- ConvertMMLToRData(dat$shape.list,
+                                  output.dir = file.path(file.list[[id]][["dst.dir"]],
+                                                         id))
   # system(paste("cp ", dat$zipfile, output.dir))
 
   message("Copying the annotation files")
   for (of in dat$other.files) {
-    system(paste("cp ", of, output.dir))
+    if (!is.na(of)) {
+      system(paste("cp ", of, output.dir))
+    }
   }
 
   # Remove contents from the temporary directory
@@ -60,7 +73,7 @@ save(df, file = "../../rdata/Yleiskartta-1000/HallintoAlue_DataFrame.RData")
 
 # ----------------------------------------
 
-# Save batch information 
+# Save batch information
 fnam <- paste(destination.dir, "README", sep = "")
 write("Land Survey Finland (MML) data in RData format. ", file = fnam)
 write("The data (C) MML 2011-2013.", file = fnam, append = TRUE)
