@@ -1,4 +1,4 @@
-#' Read zip files from given URL 
+#' Read zip files from given URL
 #'
 #' Arguments:
 #'   @param url url
@@ -8,31 +8,31 @@
 #'
 #' @export
 #' @references
-#' See citation("sorvi") 
+#' See citation("sorvi")
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # 
+#' @examples #
 #' @keywords utilities
 
 url_shp_to_spdf <- function(url) {
- 
+
   # Adjusted from http://thebiobucket.blogspot.co.at
 
   require(rgdal)
- 
+
   wd <- getwd()
   td <- tempdir()
   setwd(td)
- 
+
   #temp <- tempfile(fileext = ".zip")
   temp <- "tmp.zip"
   download.file(url, temp)
   unzip(temp)
- 
+
   shp <- dir(tempdir(), "*.shp$")
   lyr <- sub(".shp$", "", shp)
   y <- lapply(X = lyr, FUN = function(x) readOGR(dsn=shp, layer=lyr))
   names(y) <- lyr
- 
+
   unlink(dir(td))
   setwd(wd)
   return(y)
@@ -48,9 +48,9 @@ url_shp_to_spdf <- function(url) {
 #'
 #' @export
 #' @references
-#' See citation("sorvi") 
+#' See citation("sorvi")
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # 
+#' @examples #
 #' @keywords utilities
 
 list.MML.zips <- function (url) {
@@ -67,7 +67,7 @@ list.MML.zips <- function (url) {
     temp2 <- readHTMLTable(url2)
     entries2 <- as.vector(temp2[[1]]$Name)
     entries2 <- paste(url2, entries2[grep("/", as.vector(temp2[[1]]$Name))], sep = "")
- 
+
     for (url3 in entries2) {
       temp3 <- readHTMLTable(url3)
       entries3 <- as.vector(temp3[[1]]$Name)
@@ -95,9 +95,9 @@ list.MML.zips <- function (url) {
 #'
 #' @export
 #' @references
-#' See citation("sorvi") 
+#' See citation("sorvi")
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # 
+#' @examples #
 #' @keywords utilities
 
 GetKapsi <- function (zipfile, tmp.dir) {
@@ -105,13 +105,13 @@ GetKapsi <- function (zipfile, tmp.dir) {
   require(maptools)
 
   # Temporary file name
-  items <- unlist(strsplit(gsub("/", "--", zipfile), "--")); 
+  items <- unlist(strsplit(gsub("/", "--", zipfile), "--"));
   local.zip <- items[[length(items)]]
   local.zip <- paste(tmp.dir, local.zip, sep = "/")
 
   # Create temporary directory and zip file destination
   if (length(dir(tmp.dir)) == 0) {
-    system(paste("mkdir ", tmp.dir))  
+    system(paste("mkdir ", tmp.dir))
   }
 
   # Download the zip file:
@@ -129,7 +129,7 @@ GetKapsi <- function (zipfile, tmp.dir) {
 
   shape.list <- list()
   for (f in shape.files) {
- 
+
     # Read and preprocess shape file
     message(f)
     fnam <- paste(tmp.dir, "/", f, sep = "")
@@ -154,6 +154,7 @@ GetKapsi <- function (zipfile, tmp.dir) {
 #' Download MML data
 #'
 #' Arguments:
+#'   @param id name of the resource
 #'   @param zipfile zip file URL or local file name
 #'   @param tmp.dir temporary data directory
 #'
@@ -162,17 +163,17 @@ GetKapsi <- function (zipfile, tmp.dir) {
 #'
 #' @export
 #' @references
-#' See citation("sorvi") 
+#' See citation("sorvi")
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # 
+#' @examples #
 #' @keywords utilities
 
-GetMML <- function (zipfile, tmp.dir) {
+GetMML <- function(id, zipfile, tmp.dir) {
 
   require(maptools)
 
   # Temporary file name
-  items <- unlist(strsplit(gsub("/", "--", zipfile), "--")); 
+  items <- unlist(strsplit(gsub("/", "--", zipfile), "--"));
   local.zip <- items[[length(items)]]
   local.zip <- paste(tmp.dir, local.zip, sep = "/")
 
@@ -186,16 +187,29 @@ GetMML <- function (zipfile, tmp.dir) {
   # Unzip the downloaded zip file
   unzip(local.zip, exdir = file.path(tmp.dir))
 
-  # List the unzipped shape files
-  shape.files <- dir(paste(tmp.dir, "/etrs-tm35fin/", sep = ""), pattern = ".shp$", full.names = TRUE)
+  # Kuntajako has a different dir structure, so it needs different processing.
+  if (id == "Kuntajako-1000") {
+    # List the unzipped shape files
+    shape.files <- dir(file.path(tmp.dir, "Kuntajako_2016_1_1milj/mml/hallintorajat_milj_tk/2016"),
+                       pattern = ".shp$", full.names = TRUE)
+    pdf.files <- NA
+    txt.files <- dir(tmp.dir, pattern = ".txt$", recursive = TRUE,
+                     full.names = TRUE)
+  } else {
+    # List the unzipped shape files
+    shape.files <- dir(paste(tmp.dir, "/etrs-tm35fin/", sep = ""),
+                       pattern = ".shp$", full.names = TRUE)
 
-  system(paste("mv ", tmp.dir, "/Maanmittaus*", " ", tmp.dir, "/MaanmittauslaitoksenIlmaiskayttooikeuslisenssiYleiskartta.pdf", sep = ""))
-  pdf.files <- dir(tmp.dir, pattern = "Maanmittaus", full.names = TRUE)
-  txt.files <- dir(tmp.dir, pattern = ".txt$", full.names = TRUE)
+    system(paste("mv ", tmp.dir, "/Maanmittaus*", " ", tmp.dir,
+                 "/MaanmittauslaitoksenIlmaiskayttooikeuslisenssiYleiskartta.pdf",
+                 ssep = ""))
+    pdf.files <- dir(tmp.dir, pattern = "Maanmittaus", full.names = TRUE)
+    txt.files <- dir(tmp.dir, pattern = ".txt$", full.names = TRUE)
+  }
 
   shape.list <- list()
   for (f in shape.files) {
- 
+
     # Read and preprocess shape file
     message(f)
     sp <- NULL
@@ -204,14 +218,15 @@ GetMML <- function (zipfile, tmp.dir) {
     if (length(grep("Spatial", class(sp))) == 0) {
       warning(paste("failed to read", f))
     } else {
-      fsplit <- unlist(strsplit(f, "/")); 
+      fsplit <- unlist(strsplit(f, "/"));
       fout <- fsplit[[length(fsplit)]]
       shape.list[[fout]] <- PreprocessShapeMML(sp)
     }
 
   }
 
-  list(shape.list = shape.list, zipfile = local.zip, tmp.dir = tmp.dir, other.files = c(pdf.files, txt.files))
+  return(list(shape.list = shape.list, zipfile = local.zip, tmp.dir = tmp.dir,
+              other.files = c(pdf.files, txt.files)))
 
 }
 
@@ -229,9 +244,9 @@ GetMML <- function (zipfile, tmp.dir) {
 #'
 #' @export
 #' @references
-#' See citation("sorvi") 
+#' See citation("sorvi")
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
-#' @examples # 
+#' @examples #
 #' @keywords utilities
 
 ConvertMMLToRData <- function (MML, output.dir) {
@@ -251,8 +266,8 @@ ConvertMMLToRData <- function (MML, output.dir) {
   for (item in names(MML)) {
     message(item)
 
-    sp <- MML[[item]]    
-      
+    sp <- MML[[item]]
+
     fnam <- paste(output.dir, item, ".RData", sep = "")
     fnam <- gsub(".shp", "", fnam)
 
@@ -270,9 +285,9 @@ ConvertMMLToRData <- function (MML, output.dir) {
 
 
 
-#' Preprocessing function for MML data 
+#' Preprocessing function for MML data
 #'
-#' This script can be used to preprocess shape data 
+#' This script can be used to preprocess shape data
 #' obtained from Finnish geographical agency (Maanmittauslaitos, MML)
 #' The data copyright is on (C) MML 2011.
 #'
@@ -288,11 +303,11 @@ ConvertMMLToRData <- function (MML, output.dir) {
 #'
 #' @export
 #' @references
-#' See citation("sorvi") 
+#' See citation("sorvi")
 #' @author Leo Lahti \email{louhos@@googlegroups.com}
 #' @examples # Not run:
-#' # load(url(paste(sorvi.data.url, "MML.rda", sep = ""))); 
-#' # sp <- MML[[1]][[1]]; 
+#' # load(url(paste(sorvi.data.url, "MML.rda", sep = "")));
+#' # sp <- MML[[1]][[1]];
 #' # sp2 <- PreprocessShapeMML(sp)
 #'
 #' @keywords utilities
@@ -302,13 +317,13 @@ PreprocessShapeMML <- function (sp) {
   # TODO: parseri, joka poimii vain oleelliset tiedot data.frameen
   # ja tekee tarpeelliset merkistomuunnokset.
   # names(sp)
-  # "Suuralue"  "Suural_ni1" "Suural_ni2" 
-  # "AVI"        "AVI_ni1"    "AVI_ni2"    
-  # "Maakunta"   "Maaku_ni1" "Maaku_ni2"  
-  # "Seutukunta" "Seutuk_ni1" "Seutuk_ni2" 
-  # "Kunta"     "Kunta_ni1"  "Kunta_ni2" 
+  # "Suuralue"  "Suural_ni1" "Suural_ni2"
+  # "AVI"        "AVI_ni1"    "AVI_ni2"
+  # "Maakunta"   "Maaku_ni1" "Maaku_ni2"
+  # "Seutukunta" "Seutuk_ni1" "Seutuk_ni2"
+  # "Kunta"     "Kunta_ni1"  "Kunta_ni2"
   # "Kieli_ni1"  "Kieli_ni2"  # Ruotsi/Suomi
-  # "Kaupunki"   
+  # "Kaupunki"
   # "SHAPE_Leng" "SHAPE_Area"
 
   # Specify fields that need to converted into UTF-8
@@ -341,15 +356,15 @@ PreprocessShapeMML <- function (sp) {
 
   if (!is.null(sp$Suural_ni1)) {
     # All ni1 already in Finnish
-    dat$Suuralue.FI   <- iconv(dat$Suural_ni1, from = "latin1", to = "UTF-8") 
+    dat$Suuralue.FI   <- iconv(dat$Suural_ni1, from = "latin1", to = "UTF-8")
   }
 
   if (!is.null(sp$Maaku_ni1)) {
     # All ni1 already in Finnish
-    dat$Maakunta.FI   <- iconv(dat$Maaku_ni1, from = "latin1", to = "UTF-8")  
+    dat$Maakunta.FI   <- iconv(dat$Maaku_ni1, from = "latin1", to = "UTF-8")
   }
 
-  if (!is.null(sp$Seutuk_ni1)) { 
+  if (!is.null(sp$Seutuk_ni1)) {
 
     # Combine ni1, ni2 to use systematically Finnish names
     kunta <- as.character(sp$Seutuk_ni1)
@@ -365,31 +380,31 @@ PreprocessShapeMML <- function (sp) {
     inds <- sp$Kieli_ni1 == "Ruotsi" & !sp$Kunta_ni2 == "N_A"
     kunta[inds] <- as.character(sp$Kunta_ni2[inds])
     dat$Kunta.FI <- iconv(kunta, from = "latin1", to = "UTF-8")
-    
+
     dat$Kunta.FI <- convert_municipality_codes(dat$Kunta.FI)
     # Update municipality names
     dat$Kunta.FI <- factor(dat$Kunta.FI)
 
   }
-  
-  # The shapefile being processed is recognized to conatain municipality 
+
+  # The shapefile being processed is recognized to conatain municipality
   # polygons if it contains field "Enklaavi".
-  # Attribute field "Enklaavi" specifies of how many parts a municipality 
+  # Attribute field "Enklaavi" specifies of how many parts a municipality
   # constitutes of. 1 indicates only one polygon, anything >1 means that the
   # municipality constitutes of several polygons. Other than field "Enklaavi",
-  # the attribute rows are identical. Merge polygons and use the first 
+  # the attribute rows are identical. Merge polygons and use the first
   # attribute row.
-  
+
   # First check if multipolygon municipalities exist
   if ("Enklaavi" %in% names(dat) & any(dat$Enklaavi > 1)) {
     union_sp <- unionSpatialPolygons(sp, sp$Kunta)
     # Get only 1st attribute data row ("Enklaavi") for each municipality
     dat <- dat[which(dat$Enklaavi == 1),]
-    
+
     # Use Kunta (ID) as row names, this is needed for the creation of a merged
     # SpatialPolygonsDataFrame
     row.names(dat) <- dat$Kunta
-    
+
     sp <- SpatialPolygonsDataFrame(union_sp, data=dat)
   } else {
     sp@data <- dat
