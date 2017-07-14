@@ -1,5 +1,10 @@
 
 
+# If run from RStudio, set the WD correctly
+if (Sys.getenv("RSTUDIO") == "1") {
+  setwd("rscripts/Kapsi/")
+}
+
 # Convert certain key data files from MML, obtained through Kapsi, into RData format.
 # From http://kartat.kapsi.fi/
 # List the data sets relevant to our present R tools
