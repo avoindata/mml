@@ -67,7 +67,11 @@ zip(gsub("\\.shp", "\\.zip", output_file), files = shp_files)
 
 ## GeoJSON
 
+# This probably needs to be WGS84
+
+
 output_file <- gsub("\\.shp", "\\.geojson", output_file)
-sf::st_write(municipal_borders_land, output_file)
+sf::st_write(sf::st_transform(municipal_borders_land,  "+init=epsg:4326"),
+             output_file)
 
 zip(paste0(output_file, ".zip"), output_file)
