@@ -58,3 +58,9 @@ municipal_borders_land <- municipal_borders %>%
 
 output_file <- file.path(target_dir, "kuntajako_2017_maa_alueet.shp")
 sf::st_write(municipal_borders_land, output_file)
+
+# zip it as well
+shp_files <- list.files(dirname(output_file), gsub("\\..{3}$", "", 
+                                                   basename(output_file)),
+                        full.names = TRUE)
+zip(gsub("\\.shp", "\\.zip", output_file), files = shp_files)
