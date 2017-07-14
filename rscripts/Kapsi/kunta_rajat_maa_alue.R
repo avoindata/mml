@@ -46,7 +46,7 @@ municipal_borders_land <- municipal_borders %>%
   dplyr::filter(!GML_ID %in% municipal_borders_land$GML_ID) %>% 
   rbind(municipal_borders_land) %>% 
   # Also coerce GML_ID back to characted, otherwise GDAL won't like it
-  # when writing a shapfile
+  # when writing a shapefile
   dplyr::mutate(GML_ID = as.character(GML_ID)) %>% 
   # For now, the data is a strange mix of POLYGONs and MULTIPOLYGONs.
   # Cast explicitly to MULTIPOLYGON just to be sure.
