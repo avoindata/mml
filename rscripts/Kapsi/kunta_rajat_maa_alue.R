@@ -35,8 +35,6 @@ water_area <- sf::st_read("data/mml/1_milj_Shape_etrs_shape/VesiAlue.shp") %>%
 sea_area <- water_area %>% 
   dplyr::filter(Kohdeluokk == 36211) 
 
-sf::st_bbox(sea_area)
-
 # Filter only sea areas and remove them
 municipal_borders_land <- municipal_borders %>% 
   sf::st_difference(sf::st_union(sf::st_combine(sea_area)))
