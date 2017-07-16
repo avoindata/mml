@@ -1,0 +1,5 @@
+Land Survey Finland (MML) data in RData format. 
+The data (C) MML 2017.
+Obtained through Kapsi.
+For full conversion details, references and contact information, see https://github.com/avoindata/mml/blob/master/rscripts/Kapsi/kunta_rajat_maa_alue.R
+Last conversion: Fri Jul 14 18:38:15 2017
